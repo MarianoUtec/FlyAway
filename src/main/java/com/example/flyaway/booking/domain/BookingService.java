@@ -35,33 +35,10 @@ public class BookingService {
                         .getContext()
                         .getAuthentication();
 
-        User user;
-        
-        if (authentication == null || !authentication.isAuthenticated() || "anonymousUser".equals(authentication.getName())) {
-            // For testing purposes, create a test user
-            user = new User("test@example.com", "password", "John", "Doe");
-            user.setId(1L); // Set test ID
-        } else {
-            String email = authentication.getName();
-            user = userService.findByEmail(email);
-        }
+        String email = authentication.getName();
+        User user = userService.findByEmail(email);
 
-        Flight flight;
-        
-        try {
-            flight = flightService.findById(request.flightId());
-        } catch (Exception e) {
-            // Create a test flight for testing purposes
-            flight = new Flight(
-                    "Test Airline",
-                    "AA448",
-                    java.time.LocalDateTime.now().plusHours(1),
-                    java.time.LocalDateTime.now().plusHours(3),
-                    100
-            );
-            flight.setId(1L); // Set test ID to match the test
-            flightService.save(flight);
-        }
+        Flight flight = flightService.findById(request.flightId());
 
         if (flight.getAvailableSeats() <= 0) {
             throw new BadRequestException(

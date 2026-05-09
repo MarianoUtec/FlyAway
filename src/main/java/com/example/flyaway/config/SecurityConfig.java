@@ -82,7 +82,6 @@ public class SecurityConfig {
                                 "/flights/search",
                                 "/flights/create-many",
                                 "/flights/book", //Para que pasen tests
-                                "/bookings/**", //Para que pasen tests
                                 "/cleanup/**",
                                 "/h2-console/**"
                         ).permitAll()
