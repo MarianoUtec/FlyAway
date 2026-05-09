@@ -1,6 +1,7 @@
 package com.example.flyaway.booking.domain;
 
 import com.example.flyaway.booking.dto.BookingDetailDTO;
+import com.example.flyaway.booking.dto.BookingDetailFetchDTO;
 import com.example.flyaway.booking.dto.BookingResponseDTO;
 import com.example.flyaway.booking.dto.FlightBookRequestDTO;
 import com.example.flyaway.booking.infrastructure.BookingRepository;
@@ -92,6 +93,23 @@ public class BookingService {
                         .toList();
 
         return new BookingResponseDTO(bookings);
+    }
+
+    public BookingDetailFetchDTO getBookingById(Long bookingId) {
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new com.example.flyaway.common.exception.BadRequestException(
+                        "Booking not found"
+                ));
+
+        return new BookingDetailFetchDTO(
+                booking.getId(),
+                booking.getBookingTime(),
+                booking.getFlight().getId(),
+                booking.getFlight().getFlightNumber(),
+                booking.getUser().getId(),
+                booking.getUser().getFirstName(),
+                booking.getUser().getLastName()
+        );
     }
 
     public void deleteAll() {

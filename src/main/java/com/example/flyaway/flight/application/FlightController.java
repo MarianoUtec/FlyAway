@@ -1,6 +1,7 @@
 package com.example.flyaway.flight.application;
 
 import com.example.flyaway.booking.domain.BookingService;
+import com.example.flyaway.booking.dto.BookingDetailFetchDTO;
 import com.example.flyaway.booking.dto.FlightBookRequestDTO;
 import com.example.flyaway.common.dto.NewIdDTO;
 import com.example.flyaway.flight.domain.FlightService;
@@ -66,6 +67,15 @@ public class FlightController {
     ) {
         return ResponseEntity.status(201).body(
                 bookingService.create(request)
+        );
+    }
+
+    @GetMapping("/book/{id}")
+    public ResponseEntity<BookingDetailFetchDTO> getBooking(
+            @PathVariable Long id
+    ) {
+        return ResponseEntity.ok(
+                bookingService.getBookingById(id)
         );
     }
 }
