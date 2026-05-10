@@ -24,10 +24,6 @@ public class Flight {
     private String airlineName;
 
     @Column(nullable = false, unique = true, length = 6)
-    @Pattern(
-            regexp = "^[A-Z]{2,3}[0-9]{3}$",
-            message = "Flight number must contain only A-Z and 0-9, max 6 characters"
-    )
     private String flightNumber;
 
     @Column(nullable = false)
@@ -37,7 +33,6 @@ public class Flight {
     private LocalDateTime estArrivalTime;
 
     @Column(nullable = false)
-    @Min(value = 1, message = "Available seats must be greater than 0")
     private Integer availableSeats;
 
     public Flight(

@@ -47,6 +47,43 @@ public class BookingService {
             );
         }
 
+
+
+        if (
+                flight.getEstDepartureTime()
+                        .isBefore(LocalDateTime.now())
+        ) {
+            throw new BadRequestException(
+                    "Cannot book past flights"
+            );
+        }
+
+
+
+        List<Booking> userBookings =
+                bookingRepository.findByUser(user);
+
+        for (Booking existingBooking : userBookings) {
+
+            Flight existingFlight =
+                    existingBooking.getFlight();
+
+            boolean overlaps =
+                    flight.getEstDepartureTime()
+                            .isBefore(existingFlight.getEstArrivalTime())
+                            &&
+                            flight.getEstArrivalTime()
+                                    .isAfter(existingFlight.getEstDepartureTime());
+
+            if (overlaps) {
+                throw new BadRequestException(
+                        "Flight overlaps with another booking"
+                );
+            }
+        }
+
+
+
         flight.setAvailableSeats(
                 flight.getAvailableSeats() - 1
         );
@@ -104,8 +141,12 @@ public class BookingService {
         return new BookingDetailFetchDTO(
                 booking.getId(),
                 booking.getBookingTime(),
+
                 booking.getFlight().getId(),
                 booking.getFlight().getFlightNumber(),
+                booking.getFlight().getEstDepartureTime(),
+                booking.getFlight().getEstArrivalTime(),
+
                 booking.getUser().getId(),
                 booking.getUser().getFirstName(),
                 booking.getUser().getLastName()

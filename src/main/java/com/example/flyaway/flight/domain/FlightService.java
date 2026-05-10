@@ -4,9 +4,7 @@ import com.example.flyaway.common.dto.NewIdDTO;
 import com.example.flyaway.common.exception.BadRequestException;
 import com.example.flyaway.common.exception.ConflictException;
 import com.example.flyaway.common.exception.ResourceNotFoundException;
-import com.example.flyaway.flight.dto.CreateFlightDTO;
-import com.example.flyaway.flight.dto.FlightSearchItemDTO;
-import com.example.flyaway.flight.dto.FlightSearchResponseDTO;
+import com.example.flyaway.flight.dto.*;
 import com.example.flyaway.flight.infrastructure.FlightRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -157,5 +155,20 @@ public class FlightService {
 
     public void deleteAll() {
         flightRepository.deleteAll();
+    }
+
+    public CreateManyFlightsResponseDTO createMany(
+            CreateManyFlightsDTO request
+    ) {
+
+        List<NewIdDTO> createdFlights =
+                request.inputs()
+                        .stream()
+                        .map(this::create)
+                        .toList();
+
+        return new CreateManyFlightsResponseDTO(
+                createdFlights
+        );
     }
 }

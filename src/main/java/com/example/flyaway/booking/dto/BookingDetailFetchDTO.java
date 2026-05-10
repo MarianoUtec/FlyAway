@@ -7,6 +7,8 @@ public record BookingDetailFetchDTO(
         LocalDateTime bookingDate,
         Long flightId,
         String flightNumber,
+        LocalDateTime estDepartureTime,
+        LocalDateTime estArrivalTime,
         Long customerId,
         String customerFirstName,
         String customerLastName

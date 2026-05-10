@@ -6,6 +6,8 @@ import com.example.flyaway.booking.dto.FlightBookRequestDTO;
 import com.example.flyaway.common.dto.NewIdDTO;
 import com.example.flyaway.flight.domain.FlightService;
 import com.example.flyaway.flight.dto.CreateFlightDTO;
+import com.example.flyaway.flight.dto.CreateManyFlightsDTO;
+import com.example.flyaway.flight.dto.CreateManyFlightsResponseDTO;
 import com.example.flyaway.flight.dto.FlightSearchResponseDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -65,7 +67,7 @@ public class FlightController {
     public ResponseEntity<NewIdDTO> book(
             @Valid @RequestBody FlightBookRequestDTO request
     ) {
-        return ResponseEntity.status(201).body(
+        return ResponseEntity.status(200).body(
                 bookingService.create(request)
         );
     }
@@ -76,6 +78,19 @@ public class FlightController {
     ) {
         return ResponseEntity.ok(
                 bookingService.getBookingById(id)
+        );
+    }
+
+    @PostMapping("/create-many")
+    public ResponseEntity<CreateManyFlightsResponseDTO> createMany(
+
+            @Valid
+            @RequestBody
+            CreateManyFlightsDTO request
+    ) {
+
+        return ResponseEntity.status(201).body(
+                flightService.createMany(request)
         );
     }
 }

@@ -23,29 +23,16 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Email
     @Column(unique = true, nullable = false)
     private String email;
 
     @Column(nullable = false)
-    @Pattern(
-            regexp = "^(?=.*[A-Za-z])(?=.*\\d).{8,}$",
-            message = "Password must contain at least 8 characters, one letter and one number"
-    )
     private String password;
 
     @Column(nullable = false)
-    @Pattern(
-            regexp = ".*[A-Z].*",
-            message = "First name must contain at least one uppercase letter"
-    )
     private String firstName;
 
     @Column(nullable = false)
-    @Pattern(
-            regexp = ".*[A-Z].*",
-            message = "Last name must contain at least one uppercase letter"
-    )
     private String lastName;
 
     public User(
