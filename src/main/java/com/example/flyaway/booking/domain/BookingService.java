@@ -12,9 +12,11 @@ import com.example.flyaway.flight.domain.FlightService;
 import com.example.flyaway.user.domain.User;
 import com.example.flyaway.user.domain.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import com.example.flyaway.booking.domain.BookingCreatedEvent;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,6 +30,8 @@ public class BookingService {
     private final FlightService flightService;
 
     private final UserService userService;
+
+    private final ApplicationEventPublisher eventPublisher;
 
     public NewIdDTO create(FlightBookRequestDTO request) {
 
@@ -98,6 +102,12 @@ public class BookingService {
 
         Booking savedBooking =
                 bookingRepository.save(booking);
+
+        eventPublisher.publishEvent(
+                new BookingCreatedEvent(
+                        savedBooking.getId()
+                )
+        );
 
         return new NewIdDTO(savedBooking.getId());
     }
