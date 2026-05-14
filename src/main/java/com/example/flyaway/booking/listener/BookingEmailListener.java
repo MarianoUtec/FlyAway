@@ -34,8 +34,8 @@ public class BookingEmailListener {
         String currentDirectory =
                 System.getProperty("user.dir");
 
-        Path path = Paths.get( //PATH EXACTO PARA PROBAR EN TEST CASES DE OTRO REPO
-                "C:\\Users\\esanc\\OneDrive\\Datos adjuntos\\Desktop\\Utec Tareas\\202601\\DBP\\-cs2031-2026-1-week07-tester-main\\-cs2031-2026-1-week07-tester-main\\target\\flight_booking_email_" +
+        Path path = Paths.get( //Ubiacion exacta para probar tests desde otro repo
+                "C:\\Users\\esanc\\OneDrive\\Datos adjuntos\\Desktop\\Utec Tareas\\202601\\DBP\\-cs2031-2026-1-week07-tester\\target\\flight_booking_email_" +
                         booking.getId() +
                         ".txt"
         );
